@@ -4,12 +4,33 @@ import { useState } from "react";
 
 function App() {
   const [markedBerries, setMarkedBerries] = useState([]);
+  const [rerender, setRerender] = useState(0);
+
+  const triggerRerender = () => {
+    setRerender((prev) => prev + 1);
+  };
   return (
     <>
-      <Berry />
-      <Berry />
-      <Berry />
-      <Berry />
+      <Berry
+        setMarkedBerries={setMarkedBerries}
+        triggerRerender={triggerRerender}
+        markedBerries={markedBerries}
+      />
+      <Berry
+        setMarkedBerries={setMarkedBerries}
+        triggerRerender={triggerRerender}
+        markedBerries={markedBerries}
+      />
+      <Berry
+        setMarkedBerries={setMarkedBerries}
+        triggerRerender={triggerRerender}
+        markedBerries={markedBerries}
+      />
+      <Berry
+        setMarkedBerries={setMarkedBerries}
+        triggerRerender={triggerRerender}
+        markedBerries={markedBerries}
+      />
     </>
   );
 }

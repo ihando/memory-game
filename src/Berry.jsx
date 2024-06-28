@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 
-export function Berry() {
-  const [id, setId] = useState(() => {
-    const min = 126;
-    const max = 189;
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  });
+export function Berry({ setMarkedBerries, triggerRerender, markedBerries }) {
+  const [id, setId] = useState(() => getRandomBerryId());
   const [img, setImg] = useState(null);
   const [name, setName] = useState("");
 
@@ -18,9 +14,6 @@ export function Berry() {
         setImg(data.sprites.default);
         setName(data.name); // Update the name state variable
         setId(data.id);
-        console.log("Berry Image URL:", data.sprites.default);
-        console.log("Berry Name:", data.name);
-        console.log("Berry ID:", data.id);
       } catch (error) {
         console.error("Error fetching the berry item data:", error);
       }
@@ -29,10 +22,30 @@ export function Berry() {
     getBerryImage();
   }, [id]);
 
+  useEffect(() => {
+    if (markedBerries.length > 0) {
+      const newId = getRandomBerryId();
+      setId(newId);
+    }
+  }, [markedBerries]);
+
+  const handleClick = () => {
+    setMarkedBerries((prevList) => {
+      const newList = [...prevList, id];
+      triggerRerender();
+      return newList;
+    });
+  };
   return (
-    <div className="berry">
+    <div className="berry" onClick={handleClick}>
       {img && <img src={img} alt="Berry" />}
       <div>{name}</div>
     </div>
   );
+}
+
+function getRandomBerryId() {
+  const min = 126;
+  const max = 189;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
