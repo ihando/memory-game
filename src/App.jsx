@@ -1,6 +1,5 @@
-//import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Berry } from "./Berry";
-import { useState } from "react";
 
 function App() {
   const [markedBerries, setMarkedBerries] = useState([]);
@@ -15,22 +14,27 @@ function App() {
         setMarkedBerries={setMarkedBerries}
         triggerRerender={triggerRerender}
         markedBerries={markedBerries}
+        setRerender={setRerender}
       />
       <Berry
         setMarkedBerries={setMarkedBerries}
         triggerRerender={triggerRerender}
         markedBerries={markedBerries}
+        setRerender={setRerender}
       />
       <Berry
         setMarkedBerries={setMarkedBerries}
         triggerRerender={triggerRerender}
         markedBerries={markedBerries}
+        setRerender={setRerender}
       />
       <Berry
         setMarkedBerries={setMarkedBerries}
         triggerRerender={triggerRerender}
         markedBerries={markedBerries}
+        setRerender={setRerender}
       />
+      <div>Counter: {rerender}</div>
     </>
   );
 }

@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 
-export function Berry({ setMarkedBerries, triggerRerender, markedBerries }) {
+export function Berry({
+  setMarkedBerries,
+  triggerRerender,
+  markedBerries,
+  setRerender,
+}) {
   const [id, setId] = useState(() => getRandomBerryId());
   const [img, setImg] = useState(null);
   const [name, setName] = useState("");
@@ -30,11 +35,17 @@ export function Berry({ setMarkedBerries, triggerRerender, markedBerries }) {
   }, [markedBerries]);
 
   const handleClick = () => {
-    setMarkedBerries((prevList) => {
-      const newList = [...prevList, id];
+    if (markedBerries.includes(id)) {
       triggerRerender();
-      return newList;
-    });
+      setMarkedBerries([0]); //sets the marked berries array with id of 0 to trigger useeffect above correct, 0 is not a berry id number and will not be picked by the generator
+      setRerender(0);
+    } else {
+      setMarkedBerries((prevList) => {
+        const newList = [...prevList, id];
+        triggerRerender();
+        return newList;
+      });
+    }
   };
   return (
     <div className="berry" onClick={handleClick}>
@@ -45,7 +56,8 @@ export function Berry({ setMarkedBerries, triggerRerender, markedBerries }) {
 }
 
 function getRandomBerryId() {
+  //189
   const min = 126;
-  const max = 189;
+  const max = 133;
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
