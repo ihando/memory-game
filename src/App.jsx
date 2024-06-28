@@ -1,40 +1,31 @@
-import { useState, useEffect } from "react";
-import { Berry } from "./Berry";
+import { useState } from "react";
+import BerryContainer from "./BerryContainer";
 
 function App() {
   const [markedBerries, setMarkedBerries] = useState([]);
-  const [rerender, setRerender] = useState(0);
+  const [rerenderCounter, setRerenderCounter] = useState(0);
+  const [maxRenderCounter, setMaxRerenderCounter] = useState(0);
 
   const triggerRerender = () => {
-    setRerender((prev) => prev + 1);
+    setRerenderCounter((prev) => prev + 1);
   };
   return (
     <>
-      <Berry
+      <h2>
+        Get points by clicking on a berry but dont click a berry more than once
+      </h2>
+      <BerryContainer
+        count={12} // Number of Berry components to render
         setMarkedBerries={setMarkedBerries}
-        triggerRerender={triggerRerender}
         markedBerries={markedBerries}
-        setRerender={setRerender}
-      />
-      <Berry
-        setMarkedBerries={setMarkedBerries}
         triggerRerender={triggerRerender}
-        markedBerries={markedBerries}
-        setRerender={setRerender}
+        setRerenderCounter={setRerenderCounter}
+        setMaxRerenderCounter={setMaxRerenderCounter}
+        maxRenderCounter={maxRenderCounter}
+        rerenderCounter={rerenderCounter}
       />
-      <Berry
-        setMarkedBerries={setMarkedBerries}
-        triggerRerender={triggerRerender}
-        markedBerries={markedBerries}
-        setRerender={setRerender}
-      />
-      <Berry
-        setMarkedBerries={setMarkedBerries}
-        triggerRerender={triggerRerender}
-        markedBerries={markedBerries}
-        setRerender={setRerender}
-      />
-      <div>Counter: {rerender}</div>
+      <div>Counter: {rerenderCounter}</div>
+      <div>High Score: {maxRenderCounter}</div>
     </>
   );
 }

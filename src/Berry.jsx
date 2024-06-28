@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 
-export function Berry({
+function Berry({
+  id,
   setMarkedBerries,
-  triggerRerender,
   markedBerries,
-  setRerender,
+  triggerRerender,
+  setRerenderCounter,
+  maxRenderCounter,
+  rerenderCounter,
+  setMaxRerenderCounter,
 }) {
-  const [id, setId] = useState(() => getRandomBerryId());
   const [img, setImg] = useState(null);
   const [name, setName] = useState("");
 
@@ -17,8 +20,7 @@ export function Berry({
         const response = await fetch(berryItemUrl);
         const data = await response.json();
         setImg(data.sprites.default);
-        setName(data.name); // Update the name state variable
-        setId(data.id);
+        setName(data.name);
       } catch (error) {
         console.error("Error fetching the berry item data:", error);
       }
@@ -27,26 +29,20 @@ export function Berry({
     getBerryImage();
   }, [id]);
 
-  useEffect(() => {
-    if (markedBerries.length > 0) {
-      const newId = getRandomBerryId();
-      setId(newId);
-    }
-  }, [markedBerries]);
-
   const handleClick = () => {
     if (markedBerries.includes(id)) {
+      if (rerenderCounter > maxRenderCounter) {
+        setMaxRerenderCounter(rerenderCounter);
+      }
+      setMarkedBerries([]);
       triggerRerender();
-      setMarkedBerries([0]); //sets the marked berries array with id of 0 to trigger useeffect above correct, 0 is not a berry id number and will not be picked by the generator
-      setRerender(0);
+      setRerenderCounter(0);
     } else {
-      setMarkedBerries((prevList) => {
-        const newList = [...prevList, id];
-        triggerRerender();
-        return newList;
-      });
+      setMarkedBerries((prevList) => [...prevList, id]);
+      triggerRerender();
     }
   };
+
   return (
     <div className="berry" onClick={handleClick}>
       {img && <img src={img} alt="Berry" />}
@@ -55,9 +51,4 @@ export function Berry({
   );
 }
 
-function getRandomBerryId() {
-  //189
-  const min = 126;
-  const max = 133;
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+export default Berry;
