@@ -11,6 +11,7 @@ function App() {
   };
   return (
     <>
+      <h1>Pokemon Berry Memory Game</h1>
       <h2>
         Get points by clicking on a berry but dont click a berry more than once
       </h2>
@@ -24,8 +25,8 @@ function App() {
         maxRenderCounter={maxRenderCounter}
         rerenderCounter={rerenderCounter}
       />
-      <div>Counter: {rerenderCounter}</div>
-      <div>High Score: {maxRenderCounter}</div>
+      <h3>Counter: {rerenderCounter}</h3>
+      <h3>High Score: {maxRenderCounter}</h3>
     </>
   );
 }
